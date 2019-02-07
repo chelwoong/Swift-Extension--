@@ -9,13 +9,11 @@
 ```swift
 extension Int {
     func square(_ num: Int) -> Int {
-        var result = self
-        print(result)
+        var squaredNumber = self
         for _ in 0..<num {
-            result *= self
-            print(result)
+            squaredNumber *= self
         }
-        return result
+        return squaredNumber
     }
 }
 ```
