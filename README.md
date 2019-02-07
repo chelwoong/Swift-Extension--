@@ -9,7 +9,7 @@
 ```swift
 extension Int {
     func square(_ num: Int) -> Int {
-        var squaredNumber = self
+        var squaredNumber = 1
         for _ in 0..<num {
             squaredNumber *= self
         }
