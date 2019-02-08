@@ -5,15 +5,15 @@
     - [진법변환](#진법변환)
 - [Int](#Int)
     - [거듭제곱](#거듭제곱)
-    - [최대공약수](#최대공약수)
-    - [최소공배수](#최소공배수)
+    - [최대공약수와 최소공배수](#최대공약수와 최소공배수)
 
 
 ## String
 
 ### 진법변환
 _[거듭제곱](#거듭제곱) 활용_
-현재 진법에서 주어진 진법으로 변환해주는 extension, 단, 2 ~36진법까지 가능하며 10부터는 A~Z로 매칭한다.
+
+현재 진법에서 주어진 진법으로 변환해주는 extension. 단, 2 ~ 36진법까지 가능하며 10부터는 A ~ Z로 매칭한다.
 
 ```swift
 extension Int {
@@ -83,20 +83,16 @@ extension Int {
 }
 ```
 
-### 최대공약수
+### 최대공약수와 최소공배수
+
 ``` swift
 extension Int {
+
     // Greatest common divisor
     func Gcd(_ a: Int, _ b: Int) -> Int {
         return (a % b == 0) ? b : Gcd(b, a%b)
     }
-}
-```
-
-### 최소공배수 
-_[최대공약수](#최대공약수) 활용_
-``` swift
-extension Int {
+    
     // Least common multiple
     func Lcm(_ a: Int, _ b: Int) -> Int {
         return (a * b) / Gcd(a, b)
