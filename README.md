@@ -23,19 +23,21 @@ extension Int {
 }
 ```
 
-### 최대공약수 (Greatest common divisor)
+### 최대공약수
 ``` swift
 extension Int {
+    // Greatest common divisor
     func Gcd(_ a: Int, _ b: Int) -> Int {
         return (a % b == 0) ? b : Gcd(b, a%b)
     }
 }
 ```
 
-### 최소공배수 (Least common multiple)
+### 최소공배수 
 _[최대공약수](#최대공약수) 활용_
 ``` swift
 extension Int {
+    // Least common multiple
     func Lcm(_ a: Int, _ b: Int) -> Int {
         return (a * b) / Gcd(a, b)
     }
