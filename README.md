@@ -4,6 +4,8 @@
 
 - [Int](#Int)
     - [제곱](#제곱)
+    - [최대공약수](#최대공약수)
+    - [최소공배수](#최소공배수)
 
 
 ## Int
@@ -17,6 +19,25 @@ extension Int {
             squaredNumber *= self
         }
         return squaredNumber
+    }
+}
+```
+
+### 최대공약수 (Greatest common divisor)
+``` swift
+extension Int {
+    func Gcd(_ a: Int, _ b: Int) -> Int {
+        return (a % b == 0) ? b : Gcd(b, a%b)
+    }
+}
+```
+
+### 최소공배수 (Least common multiple)
+_[최대공약수](#최대공약수) 활용_
+``` swift
+extension Int {
+    func Lcm(_ a: Int, _ b: Int) -> Int {
+        return (a * b) / Gcd(a, b)
     }
 }
 ```
