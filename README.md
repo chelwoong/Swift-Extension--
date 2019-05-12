@@ -1,12 +1,15 @@
 # Swift extension Collection 
 
 유용한 swift extension 모아보기! 더 좋은 방법, 코드를 위해 많은 조언과 지적. 감사드립니다.
-- [String](#String)
+- [String](#string)
     - [진법변환](#진법변환)
-- [Int](#Int)
+
+- [Int](#int)
     - [거듭제곱](#거듭제곱)
     - [최대공약수와 최소공배수](#최대공약수와-최소공배수)
 
+- [UIColor](#uicolor)
+    - [hexString](#hexstring)
 
 ## String
 
@@ -99,3 +102,31 @@ extension Int {
     }
 }
 ```
+
+## UIColor
+
+### hexString
+[참고](https://stackoverflow.com/questions/24263007/how-to-use-hex-color-values)  
+
+```swift
+extension UIColor {
+    convenience init(hexString: String) {
+        let hex = hexString.trimmingCharacters(in: CharacterSet.alphanumerics.inverted)
+        var int = UInt32()
+        Scanner(string: hex).scanHexInt32(&int)
+        let a, r, g, b: UInt32
+        switch hex.count {
+        case 3: // RGB (12-bit)
+            (a, r, g, b) = (255, (int >> 8) * 17, (int >> 4 & 0xF) * 17, (int & 0xF) * 17)
+        case 6: // RGB (24-bit)
+            (a, r, g, b) = (255, int >> 16, int >> 8 & 0xFF, int & 0xFF)
+        case 8: // ARGB (32-bit)
+            (a, r, g, b) = (int >> 24, int >> 16 & 0xFF, int >> 8 & 0xFF, int & 0xFF)
+        default:
+            (a, r, g, b) = (255, 0, 0, 0)
+        }
+        self.init(red: CGFloat(r) / 255, green: CGFloat(g) / 255, blue: CGFloat(b) / 255, alpha: CGFloat(a) / 255)
+    }
+}
+```
+
