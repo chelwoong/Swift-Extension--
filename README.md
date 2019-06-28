@@ -13,6 +13,9 @@
     
 - [UIView](#uiview)
     - [anchor](#anchor)
+    
+- [UINavigationController)(#uinavigationcontroller)
+    - [pushVC](#pushvc)
 
 ## String
 
@@ -166,6 +169,25 @@ extension UIView {
             heightAnchor.constraint(equalToConstant: size.height).isActive = true
         }
     
+    }
+}
+
+```
+
+## UINaviagtionController
+
+### pushVC
+make push animation programmatically
+``` swift
+extension UINavigationController {
+    func pushVC(to destination: UIViewController) {
+        let transition = CATransition()
+        transition.duration = 0.5
+        transition.timingFunction = CAMediaTimingFunction(name: .easeInEaseOut)
+        transition.type = .push
+        transition.subtype = .fromTop
+        self.view.layer.add(transition, forKey: kCATransition)
+        self.pushViewController(destination, animated: false)
     }
 }
 
