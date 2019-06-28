@@ -14,11 +14,7 @@
 - [UIView](#uiview)
     - [anchor](#anchor)
     
-<<<<<<< HEAD
 - [UINavigationController](#uinavigationcontroller)
-=======
-- [UINavigationController)(#uinavigationcontroller)
->>>>>>> cb56cb5b2d672fc2f63b7e692515966defc1cda0
     - [pushVC](#pushvc)
 
 ## String
