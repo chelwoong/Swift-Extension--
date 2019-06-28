@@ -174,7 +174,7 @@ extension UIView {
 
 ```
 
-## UINaviagtionController
+## UINavigationController
 
 ### pushVC
 make push animation programmatically
