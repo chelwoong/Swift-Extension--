@@ -16,6 +16,7 @@
 - [UIView](#uiview)
     - [anchor](#anchor)
     - [addLine](#addline)
+    - [bindToKeyboard](#bindtokeyboard)
     
 - [UINavigationController](#uinavigationcontroller)
     - [pushVC](#pushvc)
@@ -208,6 +209,9 @@ extension UIView {
 ```
 
 ### addLine
+
+밑줄 긋기 
+
 ```swift
 enum LINE_POSITION {
     case top
@@ -233,6 +237,30 @@ extension UIView {
             self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:[lineView(width)]|", options:NSLayoutConstraint.FormatOptions(rawValue: 0), metrics:metrics, views:views))
             break
         }
+    }
+}
+```
+
+### bindToKeyboard
+
+keyboard가 나타나고 사라짐에 따라 뷰 조정하기
+
+```swift
+extension UIView {
+    func bindToKeyboard() {
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillChange(_:)), name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
+    }
+    
+    @objc private func keyboardWillChange(_ notification: NSNotification) {
+        let duration = notification.userInfo?[UIResponder.keyboardAnimationDurationUserInfoKey] as! Double
+        let curve = notification.userInfo?[UIResponder.keyboardAnimationCurveUserInfoKey] as! UInt
+        let begginingFrame = (notification.userInfo?[UIResponder.keyboardFrameBeginUserInfoKey] as! NSValue).cgRectValue
+        let endFrame = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as! NSValue).cgRectValue
+        let deltaY = endFrame.origin.y - begginingFrame.origin.y
+        
+        UIView.animateKeyframes(withDuration: duration, delay: 0.0, options: UIView.KeyframeAnimationOptions(rawValue: curve), animations: {
+            self.frame.origin.y += deltaY
+        }, completion: nil)
     }
 }
 ```
