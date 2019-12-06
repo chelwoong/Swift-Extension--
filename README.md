@@ -3,6 +3,7 @@
 유용한 swift extension 모아보기! 더 좋은 방법, 코드를 위해 많은 조언과 지적. 감사드립니다.
 - [String](#string)
     - [진법변환](#진법변환)
+    - [addLineSpacing](#addlinespacing)
 
 - [Int](#int)
     - [거듭제곱](#거듭제곱)
@@ -79,6 +80,25 @@ extension String {
         return result
     }
 }
+```
+
+### addLineSpacing
+```swift
+extension String {
+    func addLineSpacing(spacing: CGFloat) -> NSMutableAttributedString {
+        let attributedString = NSMutableAttributedString(string: self)
+        
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.lineSpacing = spacing
+        
+        attributedString.addAttribute(NSAttributedString.Key.paragraphStyle, value: paragraphStyle, range: NSMakeRange(0, attributedString.length))
+        return attributedString
+    }
+}
+
+...
+
+label.attributedText = text.addLineSpacing(spacing: 2)
 ```
 
 ## Int
