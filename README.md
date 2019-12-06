@@ -18,7 +18,11 @@
     - [anchor](#anchor)
     - [addLine](#addline)
     - [bindToKeyboard](#bindtokeyboard)
-    
+
+- [UIImageView](#uiimageview)
+    - [load(urlString:)](#loadurlstring)
+
+
 - [UINavigationController](#uinavigationcontroller)
     - [pushVC](#pushvc)
 
@@ -227,6 +231,46 @@ extension UIView {
 }
 
 ```
+
+## UIImageView
+
+### load(urlString:)
+imageCache를 사용해 한 번 받은 이미지는 더 이상 다시 요청하지 않음
+
+```swift
+let imageCache = NSCache<NSString, UIImage>()
+
+extension UIImageView {
+    func load(urlString: String) {
+        
+        guard let url: URL = URL(string: urlString) else {
+            return
+        }
+        
+        image = nil
+        
+        if let imageFromCache = imageCache.object(forKey: urlString as NSString) {
+            self.image = imageFromCache
+            return
+        }
+        
+        DispatchQueue.global().async { [weak self] in
+            if let data = try? Data(contentsOf: url) {
+                DispatchQueue.main.async {
+                    let imageToCache = UIImage(data: data)
+                    
+                    imageCache.setObject(imageToCache!, forKey: urlString as NSString)
+                    
+                    self?.image = imageToCache
+                }
+            } else {
+                print("image is nil, \(urlString)")
+            }
+        }
+    }
+}
+```
+
 
 ### addLine
 
