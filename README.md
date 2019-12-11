@@ -19,6 +19,8 @@
     - [addLine](#addline)
     - [bindToKeyboard](#bindtokeyboard)
     - [Infinite Rotate](#infinite-rotate)
+    - [corners](#corners)
+    - [shadow](#shadow)
 
 - [UIImageView](#uiimageview)
     - [load(urlString:)](#loadurlstring)
@@ -286,6 +288,31 @@ extension UIView {
         UIView.animateKeyframes(withDuration: duration, delay: 0.0, options: UIView.KeyframeAnimationOptions(rawValue: curve), animations: {
             self.frame.origin.y += deltaY
         }, completion: nil)
+    }
+}
+```
+
+### corners
+```swift
+extension UIView {
+    func corners(_ radius: CGFloat) -> UIView {
+        self.layer.cornerRadius = radius
+
+        return self
+    }
+}
+```
+
+### shadow
+```swift
+extension UIView {
+    func shadow(radius: CGFloat, color: UIColor, offset: CGSize, opacity: Float) -> UIView {
+        self.layer.shadowRadius = radius
+        self.layer.shadowColor = color.cgColor
+        self.layer.shadowOffset = offset
+        self.layer.opacity = opacity
+
+        return self
     }
 }
 ```
