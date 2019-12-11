@@ -18,6 +18,7 @@
     - [anchor](#anchor)
     - [addLine](#addline)
     - [bindToKeyboard](#bindtokeyboard)
+    - [Infinite Rotate](#infinite-rotate)
 
 - [UIImageView](#uiimageview)
     - [load(urlString:)](#loadurlstring)
@@ -232,46 +233,6 @@ extension UIView {
 
 ```
 
-## UIImageView
-
-### load(urlString:)
-imageCache를 사용해 한 번 받은 이미지는 더 이상 다시 요청하지 않음
-
-```swift
-let imageCache = NSCache<NSString, UIImage>()
-
-extension UIImageView {
-    func load(urlString: String) {
-        
-        guard let url: URL = URL(string: urlString) else {
-            return
-        }
-        
-        image = nil
-        
-        if let imageFromCache = imageCache.object(forKey: urlString as NSString) {
-            self.image = imageFromCache
-            return
-        }
-        
-        DispatchQueue.global().async { [weak self] in
-            if let data = try? Data(contentsOf: url) {
-                DispatchQueue.main.async {
-                    let imageToCache = UIImage(data: data)
-                    
-                    imageCache.setObject(imageToCache!, forKey: urlString as NSString)
-                    
-                    self?.image = imageToCache
-                }
-            } else {
-                print("image is nil, \(urlString)")
-            }
-        }
-    }
-}
-```
-
-
 ### addLine
 
 밑줄 긋기 
@@ -325,6 +286,73 @@ extension UIView {
         UIView.animateKeyframes(withDuration: duration, delay: 0.0, options: UIView.KeyframeAnimationOptions(rawValue: curve), animations: {
             self.frame.origin.y += deltaY
         }, completion: nil)
+    }
+}
+```
+
+### Infinite Rotate
+custom indicator를 만들 때 유용하다.
+
+```swift
+extension UIView {
+    private static let kRotationAnimationKey = "rotationanimationkey"
+
+    func rotate(duration: Double = 1) {
+        if layer.animation(forKey: UIView.kRotationAnimationKey) == nil {
+            let rotationAnimation = CABasicAnimation(keyPath: "transform.rotation")
+
+            rotationAnimation.fromValue = 0.0
+            rotationAnimation.toValue = Float.pi * 2.0
+            rotationAnimation.duration = duration
+            rotationAnimation.repeatCount = Float.infinity
+
+            layer.add(rotationAnimation, forKey: UIView.kRotationAnimationKey)
+        }
+    }
+
+    func stopRotating() {
+        if layer.animation(forKey: UIView.kRotationAnimationKey) != nil {
+            layer.removeAnimation(forKey: UIView.kRotationAnimationKey)
+        }
+    }
+}
+```
+
+## UIImageView
+
+### load(urlString:)
+imageCache를 사용해 한 번 받은 이미지는 더 이상 다시 요청하지 않음
+
+```swift
+let imageCache = NSCache<NSString, UIImage>()
+
+extension UIImageView {
+    func load(urlString: String) {
+        
+        guard let url: URL = URL(string: urlString) else {
+            return
+        }
+        
+        image = nil
+        
+        if let imageFromCache = imageCache.object(forKey: urlString as NSString) {
+            self.image = imageFromCache
+            return
+        }
+        
+        DispatchQueue.global().async { [weak self] in
+            if let data = try? Data(contentsOf: url) {
+                DispatchQueue.main.async {
+                    let imageToCache = UIImage(data: data)
+                    
+                    imageCache.setObject(imageToCache!, forKey: urlString as NSString)
+                    
+                    self?.image = imageToCache
+                }
+            } else {
+                print("image is nil, \(urlString)")
+            }
+        }
     }
 }
 ```
