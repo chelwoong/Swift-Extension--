@@ -19,7 +19,9 @@
     - [addLine](#addline)
     - [bindToKeyboard](#bindtokeyboard)
     - [Infinite Rotate](#infinite-rotate)
-    - [corners](#corners)
+    - [corner](#corner)
+    - [specific corners](#specific-corners)
+    - [corn
     - [shadow](#shadow)
     - [gradient](#gradient)
 
@@ -321,7 +323,7 @@ extension UIView {
 }
 ```
 
-### corners
+### corner
 ```swift
 extension UIView {
     func corners(_ radius: CGFloat) -> UIView {
@@ -329,6 +331,24 @@ extension UIView {
 
         return self
     }
+}
+```
+
+### specific corners
+
+viewWillLayoutSubviews에서 사용해야 함
+
+```swift
+func roundCorners(corners: UIRectCorner, radius: CGFloat) {
+    let contentViewLayer = CAShapeLayer()
+    let contentViewPath = UIBezierPath(
+        roundedRect: self.bounds,
+        byRoundingCorners: corners,
+        cornerRadii: CGSize(width: radius, height: radius)
+    ).cgPath
+    contentViewLayer.path = contentViewPath
+    contentViewLayer.fillColor = UIColor.white.cgColor
+    self.layer.insertSublayer(contentViewLayer, at: 0)
 }
 ```
 
