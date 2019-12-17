@@ -21,6 +21,7 @@
     - [Infinite Rotate](#infinite-rotate)
     - [corners](#corners)
     - [shadow](#shadow)
+    - [gradient](#gradient)
 
 - [UIImageView](#uiimageview)
     - [load(urlString:)](#loadurlstring)
@@ -292,31 +293,6 @@ extension UIView {
 }
 ```
 
-### corners
-```swift
-extension UIView {
-    func corners(_ radius: CGFloat) -> UIView {
-        self.layer.cornerRadius = radius
-
-        return self
-    }
-}
-```
-
-### shadow
-```swift
-extension UIView {
-    func shadow(radius: CGFloat, color: UIColor, offset: CGSize, opacity: Float) -> UIView {
-        self.layer.shadowRadius = radius
-        self.layer.shadowColor = color.cgColor
-        self.layer.shadowOffset = offset
-        self.layer.opacity = opacity
-
-        return self
-    }
-}
-```
-
 ### Infinite Rotate
 custom indicator를 만들 때 유용하다.
 
@@ -344,6 +320,44 @@ extension UIView {
     }
 }
 ```
+
+### corners
+```swift
+extension UIView {
+    func corners(_ radius: CGFloat) -> UIView {
+        self.layer.cornerRadius = radius
+
+        return self
+    }
+}
+```
+
+### shadow
+```swift
+extension UIView {
+    func shadow(radius: CGFloat, color: UIColor, offset: CGSize, opacity: Float) -> UIView {
+        self.layer.shadowRadius = radius
+        self.layer.shadowColor = color.cgColor
+        self.layer.shadowOffset = offset
+        self.layer.opacity = opacity
+
+        return self
+    }
+}
+```
+
+### gradient
+```swift
+func addGradient(colors: [CGColor], locations: [NSNumber]?) {
+    let gradient = CAGradientLayer()
+    gradient.frame = self.frame
+    gradient.colors = colors
+    gradient.locations = locations
+
+    self.layer.addSublayer(gradient)
+}
+```
+
 
 ## UIImageView
 
