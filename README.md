@@ -21,7 +21,6 @@
     - [Infinite Rotate](#infinite-rotate)
     - [corner](#corner)
     - [specific corners](#specific-corners)
-    - [corn
     - [shadow](#shadow)
     - [gradient](#gradient)
 
