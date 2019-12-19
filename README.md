@@ -354,13 +354,12 @@ func roundCorners(corners: UIRectCorner, radius: CGFloat) {
 ### shadow
 ```swift
 extension UIView {
-    func shadow(radius: CGFloat, color: UIColor, offset: CGSize, opacity: Float) -> UIView {
+    func shadow(radius: CGFloat, color: UIColor, offset: CGSize, opacity: Float) {
+        self.layer.masksToBounds = false
         self.layer.shadowRadius = radius
         self.layer.shadowColor = color.cgColor
         self.layer.shadowOffset = offset
-        self.layer.opacity = opacity
-
-        return self
+        self.layer.shadowOpacity = opacity
     }
 }
 ```
