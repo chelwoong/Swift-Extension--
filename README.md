@@ -146,6 +146,10 @@ extension Int {
 ### 소수
 ```swift
 extension Int {
+    if self < 2 {
+        return false
+    }
+    
     func isPrime() -> Bool {
         guard self != 2, self != 3 else { return true }
 
