@@ -8,6 +8,7 @@
 - [Int](#int)
     - [거듭제곱](#거듭제곱)
     - [최대공약수와 최소공배수](#최대공약수와-최소공배수)
+    - [소수](#소수)
     
 - [Date](#date)
 
@@ -138,6 +139,23 @@ extension Int {
     // Least common multiple
     func Lcm(_ a: Int, _ b: Int) -> Int {
         return (a * b) / Gcd(a, b)
+    }
+}
+```
+
+### 소수
+```swift
+extension Int {
+    func isPrime() -> Bool {
+        guard self != 2, self != 3 else { return true }
+
+        for i in 2...Int(sqrt(Double(self))) {
+            if self%i == 0 {
+                return false
+            }
+        }
+        
+        return true
     }
 }
 ```
