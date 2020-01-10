@@ -27,7 +27,7 @@
 
 - [UIImageView](#uiimageview)
     - [load(urlString:)](#loadurlstring)
-    - [setImageColor)](#setimagecolor)
+    - [setImageColor](#setimagecolor)
 
 
 - [UINavigationController](#uinavigationcontroller)
