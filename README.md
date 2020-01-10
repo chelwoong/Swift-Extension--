@@ -27,6 +27,7 @@
 
 - [UIImageView](#uiimageview)
     - [load(urlString:)](#loadurlstring)
+    - [setImageColor)](#setimagecolor)
 
 
 - [UINavigationController](#uinavigationcontroller)
@@ -437,6 +438,18 @@ extension UIImageView {
     }
 }
 ```
+
+### setImageColor
+``` swift
+extension UIImageView {
+  func setImageColor(color: UIColor) {
+    let templateImage = self.image?.withRenderingMode(.alwaysTemplate)
+    self.image = templateImage
+    self.tintColor = color
+  }
+}
+```
+
 
 ## UINavigationController
 
