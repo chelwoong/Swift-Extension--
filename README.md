@@ -2,6 +2,7 @@
 
 유용한 swift extension 모아보기! 더 좋은 방법, 코드를 위해 많은 조언과 지적. 감사드립니다.
 - [String](#string)
+    - [문자열 자르기](#문자열-자르기)
     - [진법변환](#진법변환)
     - [addLineSpacing](#addlinespacing)
 
@@ -34,6 +35,33 @@
     - [pushVC](#pushvc)
 
 ## String
+
+### 문자열 자르기
+```swift
+extension String {
+    func split(by length: Int) -> [String] {
+        var resultString = [String]()
+        
+        var string = self
+        
+        while string.count >= length {
+            let range = string.startIndex..<string.index(string.startIndex, offsetBy: length)
+            resultString.append(String(string[range]))
+            string.removeFirst(length)
+        }
+        if !string.isEmpty { resultString.append(string) }
+        
+        return resultString
+    }
+}
+
+let target = "abcabcd"
+
+let truncatedString = target.split(by: 3)
+print(truncatedString)
+// ["abc", "abc", "d"]
+```
+
 
 ### 진법변환
 _[거듭제곱](#거듭제곱) 활용_
