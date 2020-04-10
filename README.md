@@ -17,14 +17,15 @@
     - [hexString](#hexstring)
     
 - [UIView](#uiview)
-    - [anchor](#anchor)
     - [addLine](#addline)
+    - [anchor](#anchor)
     - [bindToKeyboard](#bindtokeyboard)
-    - [Infinite Rotate](#infinite-rotate)
     - [corner](#corner)
-    - [specific corners](#specific-corners)
-    - [shadow](#shadow)
     - [gradient](#gradient)
+    - [Infinite Rotate](#infinite-rotate)
+    - [shake](#shake)
+    - [shadow](#shadow)
+    - [specific corners](#specific-corners)
 
 - [UIImageView](#uiimageview)
     - [load(urlString:)](#loadurlstring)
@@ -254,6 +255,39 @@ extension UIColor {
 
 ## UIView
 
+### addLine
+
+밑줄 긋기 
+
+```swift
+enum LINE_POSITION {
+    case top
+    case bottom
+}
+
+extension UIView {
+    func addLine(position : LINE_POSITION, color: UIColor, width: Double) {
+        let lineView = UIView()
+        lineView.backgroundColor = color
+        lineView.translatesAutoresizingMaskIntoConstraints = false // This is important!
+        self.addSubview(lineView)
+
+        let metrics = ["width" : NSNumber(value: width)]
+        let views = ["lineView" : lineView]
+        self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|[lineView]|", options:NSLayoutConstraint.FormatOptions(rawValue: 0), metrics:metrics, views:views))
+
+        switch position {
+        case .top:
+            self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[lineView(width)]", options:NSLayoutConstraint.FormatOptions(rawValue: 0), metrics:metrics, views:views))
+            break
+        case .bottom:
+            self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:[lineView(width)]|", options:NSLayoutConstraint.FormatOptions(rawValue: 0), metrics:metrics, views:views))
+            break
+        }
+    }
+}
+```
+
 ### anchor
 ```swift
 extension UIView {
@@ -290,38 +324,6 @@ extension UIView {
 
 ```
 
-### addLine
-
-밑줄 긋기 
-
-```swift
-enum LINE_POSITION {
-    case top
-    case bottom
-}
-
-extension UIView {
-    func addLine(position : LINE_POSITION, color: UIColor, width: Double) {
-        let lineView = UIView()
-        lineView.backgroundColor = color
-        lineView.translatesAutoresizingMaskIntoConstraints = false // This is important!
-        self.addSubview(lineView)
-
-        let metrics = ["width" : NSNumber(value: width)]
-        let views = ["lineView" : lineView]
-        self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|[lineView]|", options:NSLayoutConstraint.FormatOptions(rawValue: 0), metrics:metrics, views:views))
-
-        switch position {
-        case .top:
-            self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[lineView(width)]", options:NSLayoutConstraint.FormatOptions(rawValue: 0), metrics:metrics, views:views))
-            break
-        case .bottom:
-            self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:[lineView(width)]|", options:NSLayoutConstraint.FormatOptions(rawValue: 0), metrics:metrics, views:views))
-            break
-        }
-    }
-}
-```
 
 ### bindToKeyboard
 
@@ -344,6 +346,29 @@ extension UIView {
             self.frame.origin.y += deltaY
         }, completion: nil)
     }
+}
+```
+
+### corner
+```swift
+extension UIView {
+    func corners(_ radius: CGFloat) -> UIView {
+        self.layer.cornerRadius = radius
+
+        return self
+    }
+}
+```
+
+### gradient
+```swift
+func addGradient(colors: [CGColor], locations: [NSNumber]?) {
+    let gradient = CAGradientLayer()
+    gradient.frame = self.frame
+    gradient.colors = colors
+    gradient.locations = locations
+
+    self.layer.addSublayer(gradient)
 }
 ```
 
@@ -375,13 +400,32 @@ extension UIView {
 }
 ```
 
-### corner
+### shadow
 ```swift
 extension UIView {
-    func corners(_ radius: CGFloat) -> UIView {
-        self.layer.cornerRadius = radius
+    func shadow(radius: CGFloat, color: UIColor, offset: CGSize, opacity: Float) {
+        self.layer.masksToBounds = false
+        self.layer.shadowRadius = radius
+        self.layer.shadowColor = color.cgColor
+        self.layer.shadowOffset = offset
+        self.layer.shadowOpacity = opacity
+    }
+}
+```
 
-        return self
+### shake
+진동 애니메이션
+```swift
+extension UIView {
+    func shake(count : Float = 2,for duration : TimeInterval = 0.15,withTranslation translation : Float = 5) {
+
+        let animation = CAKeyframeAnimation(keyPath: "transform.translation.x")
+        animation.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.linear)
+        animation.repeatCount = count
+        animation.duration = duration/TimeInterval(animation.repeatCount)
+        animation.autoreverses = true
+        animation.values = [translation, -translation]
+        layer.add(animation, forKey: "shake")
     }
 }
 ```
@@ -401,31 +445,6 @@ func roundCorners(corners: UIRectCorner, radius: CGFloat) {
     contentViewLayer.path = contentViewPath
     contentViewLayer.fillColor = UIColor.white.cgColor
     self.layer.insertSublayer(contentViewLayer, at: 0)
-}
-```
-
-### shadow
-```swift
-extension UIView {
-    func shadow(radius: CGFloat, color: UIColor, offset: CGSize, opacity: Float) {
-        self.layer.masksToBounds = false
-        self.layer.shadowRadius = radius
-        self.layer.shadowColor = color.cgColor
-        self.layer.shadowOffset = offset
-        self.layer.shadowOpacity = opacity
-    }
-}
-```
-
-### gradient
-```swift
-func addGradient(colors: [CGColor], locations: [NSNumber]?) {
-    let gradient = CAGradientLayer()
-    gradient.frame = self.frame
-    gradient.colors = colors
-    gradient.locations = locations
-
-    self.layer.addSublayer(gradient)
 }
 ```
 
