@@ -2,6 +2,7 @@
 
 유용한 swift extension 모아보기! 더 좋은 방법, 코드를 위해 많은 조언과 지적. 감사드립니다.
 - [String](#string)
+    - [문자열 인덱스](#문자열-인덱스)
     - [문자열 자르기](#문자열-자르기)
     - [진법변환](#진법변환)
     - [addLineSpacing](#addlinespacing)
@@ -38,6 +39,25 @@
     - [pushVC](#pushvc)
 
 ## String
+
+### 문자열 인덱스
+```swift
+extension String {
+    subscript(i: Int) -> Character {
+        var offset = i
+        while offset < 0 { offset += count }
+        let index = self.index(startIndex, offsetBy: offset)
+        return self[index]
+    }
+}
+
+let hello = "hello"
+let world = "world"
+let greeting = hello + world
+
+greeting[-1] // "d"
+greeting[1] // "e"
+```
 
 ### 문자열 자르기
 ```swift
