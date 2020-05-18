@@ -20,6 +20,7 @@
     
 - [UIView](#uiview)
     - [addLine](#addline)
+    - [addBottomBorderWithColor](#addbottomborderwithcolor)
     - [anchor](#anchor)
     - [bindToKeyboard](#bindtokeyboard)
     - [corner](#corner)
@@ -333,6 +334,20 @@ extension UIView {
             self.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:[lineView(width)]|", options:NSLayoutConstraint.FormatOptions(rawValue: 0), metrics:metrics, views:views))
             break
         }
+    }
+}
+```
+
+### addBottomBorderWithColor
+```swift
+extension UIView {
+    func addBottomBorderWithColor(color: UIColor, width: CGFloat) {
+        let border = UIView()
+        border.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        border.frame = CGRect(x: self.frame.origin.x,
+                              y: self.frame.origin.y+self.frame.height-width, width: self.frame.width, height: width)
+        border.backgroundColor = color
+        self.superview!.insertSubview(border, aboveSubview: self)
     }
 }
 ```
