@@ -2,10 +2,14 @@
 
 유용한 swift extension 모아보기! 더 좋은 방법, 코드를 위해 많은 조언과 지적. 감사드립니다.
 - [String](#string)
+    - #### Swift
     - [문자열 인덱스](#문자열-인덱스)
     - [문자열 자르기](#문자열-자르기)
     - [진법변환](#진법변환)
+    
+    - #### iOS
     - [addLineSpacing](#addlinespacing)
+    - [boundingRect](#boundingrect)
     - [hexToUIColor](#hextouicolor)
 
 - [Int](#int)
@@ -164,6 +168,40 @@ extension String {
 ...
 
 label.attributedText = text.addLineSpacing(spacing: 2)
+```
+
+### boundingRect
+
+```swift
+import UIKit
+
+extension String {
+
+  func boundingRect(with size: CGSize, attributes: [NSAttributedString.Key: Any]) -> CGRect {
+    let options: NSStringDrawingOptions = [.usesLineFragmentOrigin, .usesFontLeading]
+    let rect = self.boundingRect(with: size, options: options, attributes: attributes, context: nil)
+    return snap(rect)
+  }
+
+  func size(fits size: CGSize, font: UIFont, maximumNumberOfLines: Int = 0) -> CGSize {
+    let attributes: [NSAttributedString.Key: Any] = [.font: font]
+    var size = self.boundingRect(with: size, attributes: attributes).size
+    if maximumNumberOfLines > 0 {
+      size.height = min(size.height, CGFloat(maximumNumberOfLines) * font.lineHeight)
+    }
+    return size
+  }
+
+  func width(with font: UIFont, maximumNumberOfLines: Int = 0) -> CGFloat {
+    let size = CGSize(width: CGFloat.greatestFiniteMagnitude, height: CGFloat.greatestFiniteMagnitude)
+    return self.size(fits: size, font: font, maximumNumberOfLines: maximumNumberOfLines).width
+  }
+
+  func height(fits width: CGFloat, font: UIFont, maximumNumberOfLines: Int = 0) -> CGFloat {
+    let size = CGSize(width: width, height: CGFloat.greatestFiniteMagnitude)
+    return self.size(fits: size, font: font, maximumNumberOfLines: maximumNumberOfLines).height
+  }
+}
 ```
 
 ### hexToUIColor
