@@ -14,6 +14,8 @@
 
 - [Int](#int)
     - [거듭제곱](#거듭제곱)
+    - [랜덤](#랜덤)
+    - [거듭제곱](#거듭제곱)
     - [최대공약수와 최소공배수](#최대공약수와-최소공배수)
     - [소수](#소수)
     
@@ -244,6 +246,24 @@ extension Int {
         return squaredNumber
     }
 }
+```
+
+### 랜덤  
+해당 정수 범위 안에서 랜덤 값을 리턴한다.
+```swift
+extension Int {
+  var arc4random: Int {
+    if self > 0 {
+      return Int(arc4random_uniform(UInt32(self)))
+    } else if self < 0 {
+      return -Int(arc4random_uniform(UInt32(abs(self))))
+    } else {
+      return 0
+    }
+  }
+}
+...
+print(5.arc4random) // 0 ~ 4 사이의 랜덤값 
 ```
 
 ### 최대공약수와 최소공배수
