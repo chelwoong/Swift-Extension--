@@ -271,15 +271,15 @@ print(5.arc4random) // 0 ~ 4 사이의 랜덤값
 ``` swift
 extension Int {
 
-    // Greatest common divisor
-    func Gcd(_ a: Int, _ b: Int) -> Int {
-        return (a % b == 0) ? b : Gcd(b, a%b)
+    extension Int {
+    func gcd(with n: Int) -> Int {
+        return (self % n == 0) ? n : n.gcd(with: self%n)
     }
     
-    // Least common multiple
-    func Lcm(_ a: Int, _ b: Int) -> Int {
-        return (a * b) / Gcd(a, b)
+    func lcm(with n: Int) -> Int {
+        return (self * n) / self.gcd(with: n)
     }
+}
 }
 ```
 
