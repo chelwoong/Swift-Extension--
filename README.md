@@ -286,19 +286,14 @@ extension Int {
 ### 소수
 ```swift
 extension Int {
-    if self < 2 {
-        return false
-    }
-    
-    func isPrime() -> Bool {
+    var isPrime: Bool {
+        guard self != 1 else { return false }
         guard self != 2, self != 3 else { return true }
-
         for i in 2...Int(sqrt(Double(self))) {
             if self%i == 0 {
                 return false
             }
         }
-        
         return true
     }
 }
