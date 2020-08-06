@@ -18,6 +18,7 @@
     - [거듭제곱](#거듭제곱)
     - [최대공약수와 최소공배수](#최대공약수와-최소공배수)
     - [소수](#소수)
+    - [BinaryInteger](#binaryinteger)
     
 - [Date](#date)
 
@@ -298,6 +299,37 @@ extension Int {
     }
 }
 ```
+
+### BinaryInteger
+```swift
+extension BinaryInteger {
+    var binaryDescription: String {
+        var binaryString = ""
+        var internalNumber = self
+        var counter = 0
+
+        for _ in (1...self.bitWidth) {
+            binaryString.insert(contentsOf: "\(internalNumber & 1)", at: binaryString.startIndex)
+            internalNumber >>= 1
+            counter += 1
+            if counter % 4 == 0 {
+                binaryString.insert(contentsOf: " ", at: binaryString.startIndex)
+            }
+        }
+
+        return binaryString
+    }
+}
+
+UInt8(9).binaryDescription      // "0000 1001"
+Int8(5).binaryDescription       // "0000 0101"
+UInt16(1945).binaryDescription  // "0000 0111 1001 1001"
+
+Int16(14).binaryDescription     // "0000 0000 0000 1110"
+Int32(6).binaryDescription      // "0000 0000 0000 0000 0000 0000 0000 0110"
+UInt32(2018).binaryDescription  // "0000 0000 0000 0000 0000 0111 1110 0010"
+```
+
 
 ## Date
 ```swift
