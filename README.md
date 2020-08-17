@@ -4,6 +4,7 @@
 - [String](#string)
     - #### Swift
     - [문자열 인덱스](#문자열-인덱스)
+    - [문자열 인덱싱](#문자열-인덱싱)
     - [문자열 자르기](#문자열-자르기)
     - [진법변환](#진법변환)
     
@@ -67,6 +68,36 @@ let greeting = hello + world
 
 greeting[-1] // "d"
 greeting[1] // "e"
+```
+
+### 문자열 인덱싱
+```swift
+extension String {
+    func index(from: Int) -> Index {
+        return self.index(startIndex, offsetBy: from)
+    }
+
+    func substring(from: Int) -> String {
+        let fromIndex = index(from: from)
+        return String(self[fromIndex...])
+    }
+
+    func substring(to: Int) -> String {
+        let toIndex = index(from: to)
+        return String(self[..<toIndex])
+    }
+
+    func substring(with r: Range<Int>) -> String {
+        let startIndex = index(from: r.lowerBound)
+        let endIndex = index(from: r.upperBound)
+        return String(self[startIndex..<endIndex])
+    }
+}
+
+let str = "Hello, playground"
+print(str.substring(from: 7))         // playground
+print(str.substring(to: 5))           // Hello
+print(str.substring(with: 7..<11))    // play
 ```
 
 ### 문자열 자르기
