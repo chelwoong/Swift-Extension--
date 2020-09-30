@@ -612,19 +612,11 @@ extension UIView {
 
 ### specific corners
 
-viewWillLayoutSubviews에서 사용해야 함
 
 ```swift
-func roundCorners(corners: UIRectCorner, radius: CGFloat) {
-    let contentViewLayer = CAShapeLayer()
-    let contentViewPath = UIBezierPath(
-        roundedRect: self.bounds,
-        byRoundingCorners: corners,
-        cornerRadii: CGSize(width: radius, height: radius)
-    ).cgPath
-    contentViewLayer.path = contentViewPath
-    contentViewLayer.fillColor = UIColor.white.cgColor
-    self.layer.insertSublayer(contentViewLayer, at: 0)
+func roundCorners(corners: CACornerMask, radius: CGFloat) {
+    layer.maskedCorners = corners
+    layer.cornerRadius = radius
 }
 ```
 
