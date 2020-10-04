@@ -7,6 +7,7 @@
     - [문자열 인덱싱](#문자열-인덱싱)
     - [문자열 자르기](#문자열-자르기)
     - [진법변환](#진법변환)
+    - [특수문자 확인](#특수문자-확인)
     
     - #### iOS
     - [addLineSpacing](#addlinespacing)
@@ -184,6 +185,27 @@ extension String {
     }
 }
 ```
+
+### 특수문자 확인
+
+```swift
+func hasSpecialCharacters() -> Bool {
+
+    do {
+        let regex = try NSRegularExpression(pattern: ".*[^A-Za-z0-9].*", options: .caseInsensitive)
+        if let _ = regex.firstMatch(in: self, options: NSRegularExpression.MatchingOptions.reportCompletion, range: NSMakeRange(0, self.count)) {
+            return true
+        }
+
+    } catch {
+        debugPrint(error.localizedDescription)
+        return false
+    }
+
+    return false
+}
+```
+
 
 ### addLineSpacing
 ```swift
