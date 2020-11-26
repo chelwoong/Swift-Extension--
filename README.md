@@ -42,6 +42,9 @@
 - [UIImageView](#uiimageview)
     - [load(urlString:)](#loadurlstring)
     - [setImageColor](#setimagecolor)
+    
+- [UIImage](#uiimage)
+    - [scaled](#scaled)
 
 - [UITextView](#uitextview)
     - [numberOfLine](#numberofline)
@@ -690,6 +693,26 @@ extension UIImageView {
     self.image = templateImage
     self.tintColor = color
   }
+}
+```
+
+## UIImage
+
+### scaled
+```swift
+extension UIImage {
+    
+    /// image를 주어진 size로 렌더링해서 반환합니다.
+    /// - Parameters:
+    ///   - size: 새로 draw할 size
+    ///   - renderingMode: default: alwaysTemplate
+    func scaled(to size: CGSize, renderingMode: RenderingMode = .alwaysTemplate) -> UIImage? {
+        UIGraphicsBeginImageContext(size)
+        self.draw(in: CGRect(x: 0, y: 0, width: size.width, height: size.height))
+        let newImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        return newImage?.withRenderingMode(renderingMode)
+    }
 }
 ```
 
