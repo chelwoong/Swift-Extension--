@@ -327,8 +327,6 @@ print(5.arc4random) // 0 ~ 4 사이의 랜덤값
 
 ``` swift
 extension Int {
-
-    extension Int {
     func gcd(with n: Int) -> Int {
         return (self % n == 0) ? n : n.gcd(with: self%n)
     }
@@ -336,7 +334,6 @@ extension Int {
     func lcm(with n: Int) -> Int {
         return (self * n) / self.gcd(with: n)
     }
-}
 }
 ```
 
