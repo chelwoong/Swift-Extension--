@@ -20,6 +20,7 @@
     - [거듭제곱](#거듭제곱)
     - [최대공약수와 최소공배수](#최대공약수와-최소공배수)
     - [소수](#소수)
+    - [에라토스테네스의 체](#에라토스테네스의-체)
     - [BinaryInteger](#binaryinteger)
     
 - [Date](#date)
@@ -348,6 +349,35 @@ extension Int {
         return true
     }
 }
+```
+
+### 에라토스테네스의 체
+```swift
+extension Int {
+    var eratosthenes: [Int] {
+        guard self >= 2 else { return [] }
+        var isPrimes = [Bool](repeating: true, count: self+1)
+        for i in 2...self {
+            guard i*i <= self else { break }
+            guard isPrimes[i] else { continue }
+            
+            for j in stride(from: i*i, to: self+1, by: i) {
+                if isPrimes[j] {
+                    isPrimes[j] = false
+                }
+            }
+        }
+        
+        var primes = [Int]()
+        for prime in 2...self where isPrimes[prime] {
+            primes.append(prime)
+        }
+        
+        return primes
+    }
+}
+
+20.eratosthenes // [2, 3, 5, 7, 11, 13, 17, 19]
 ```
 
 ### BinaryInteger
